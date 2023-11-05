@@ -19,7 +19,7 @@ public class SettingGet extends Function {
     @Override
     protected Object run(BasicRuntime<?, ?, ?> runtime, List<Object> args) {
         String key = args.get(0).toString();
-        String def = Optional.ofNullable(args.get(1)).orElse("null").toString();
+        String def = args.size() == 1 ? "null" : args.get(1).toString();
         return Optional.ofNullable(runtime.getFile().getSetting(key)).orElse(def);
     }
 }

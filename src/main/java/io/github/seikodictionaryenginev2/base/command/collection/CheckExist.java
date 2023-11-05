@@ -22,11 +22,11 @@ public class CheckExist extends Function {
         Object a = args.get(0);
 
         if (a instanceof Map<?,?>) {
-            return ((Map<?, ?>) a).containsKey(((Map<?, ?>) a).get(1));
+            return ((Map<?, ?>) a).containsKey(args.get(1));
         }
 
         if (a instanceof List<?>) {
-            return ((List<?>) a).contains(((List<?>) a).get(1));
+            return ((List<?>) a).contains(args.get(1));
         }
         throw new DictionaryOnRunningException("第一个参数不是集合对象!");
     }
