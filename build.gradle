@@ -15,6 +15,8 @@ repositories {
 dependencies {
     implementation('io.github.seikodictionaryenginev2:core_base:2.0-dev-2')
 
+    compileOnly 'com.alibaba.fastjson2:fastjson2:2.0.42'
+
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

@@ -32,26 +32,28 @@ public class TestDictionaryCode {
 
     @Test
     public void arrayTest() {
-        for (DictionaryProject project : DictionaryEnvironment.getInstance().getDicList()) {
-            TestRuntime runtime = new TestRuntime(project.getIndexFile(), "");
-            runtime.invoke("集合函数测试");
-        }
+        invoke("集合函数测试");
     }
 
     @Test
     public void settingTest() {
-        for (DictionaryProject project : DictionaryEnvironment.getInstance().getDicList()) {
-            TestRuntime runtime = new TestRuntime(project.getIndexFile(), "");
-            runtime.invoke("设置函数测试");
-        }
+        invoke("设置函数测试");
     }
 
     @Test
     public void callTest() {
-        for (DictionaryProject project : DictionaryEnvironment.getInstance().getDicList()) {
-            TestRuntime runtime = new TestRuntime(project.getIndexFile(), "");
-            runtime.invoke("调用测试");
-        }
+        invoke("调用测试");
+    }
+
+    @Test
+    public void crossDicTest() {
+        invoke("跨词库调用测试");
+    }
+
+
+    @Test
+    public void ioTest() {
+        invoke("读写测试");
     }
 
     private static DictionaryEnvironment initEnv() {
@@ -72,6 +74,14 @@ public class TestDictionaryCode {
 
 
         return environment;
+    }
+
+
+    private static void invoke(String comm) {
+        for (DictionaryProject project : DictionaryEnvironment.getInstance().getDicList()) {
+            TestRuntime runtime = new TestRuntime(project.getIndexFile(), "");
+            runtime.invoke(comm);
+        }
     }
 
 
