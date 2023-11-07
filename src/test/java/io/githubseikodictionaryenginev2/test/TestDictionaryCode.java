@@ -52,6 +52,13 @@ public class TestDictionaryCode {
 
 
     @Test
+    public void asyncTest() throws InterruptedException {
+        invoke("异步测试");
+        Thread.sleep(5000);
+    }
+
+
+    @Test
     public void ioTest() {
         invoke("读写测试");
     }
@@ -107,7 +114,9 @@ public class TestDictionaryCode {
         //清空缓冲区前会调用这个方法，在此之前请检查缓冲区是否为null
         @Override
         protected void clearMessage0(StringBuilder stringBuilder) {
-            System.out.println(stringBuilder.toString());
+            if (!stringBuilder.isEmpty()) {
+                System.out.println(stringBuilder);
+            }
         }
 
         //向缓冲区添加格式化的字符串。

@@ -48,6 +48,11 @@ public class CallMethod extends Function {
             this.prevented = prevented;
         }
 
+
+        protected BasicRuntime<Event, Contact, MessageCache> getOrigin() {
+            return origin;
+        }
+
         @Override
         protected Contact initContact(BasicRuntime<Event, Contact, MessageCache> EVENT) {
             return EVENT.getContact();
@@ -116,7 +121,7 @@ public class CallMethod extends Function {
 
         @Override
         public HashMap<String, Object> getRuntimeObject() {
-            return prevented ? super.getRuntimeObject() : origin.getRuntimeObject();
+            return origin.getRuntimeObject();
         }
     }
 

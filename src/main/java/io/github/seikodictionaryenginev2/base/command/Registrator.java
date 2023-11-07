@@ -8,6 +8,8 @@ import io.github.seikodictionaryenginev2.base.command.collection.Clone;
 import io.github.seikodictionaryenginev2.base.command.collection.Length;
 import io.github.seikodictionaryenginev2.base.command.func.CallMethod;
 import io.github.seikodictionaryenginev2.base.command.func.CallMethodCrossDictionary;
+import io.github.seikodictionaryenginev2.base.command.func.CallMethodAsync;
+import io.github.seikodictionaryenginev2.base.command.func.Delay;
 import io.github.seikodictionaryenginev2.base.command.global.SettingGet;
 import io.github.seikodictionaryenginev2.base.command.global.SettingKey;
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile;
@@ -28,9 +30,10 @@ public class Registrator {
         put("取设置", SettingGet.class); //$设置 键 默认值(可选)$ -> 字符串
         put("设置键", SettingKey.class); //$设置键$ -> 集合(列表)
 
-        put("调用", CallMethod.class); //$调用 函数名 {传参}$ -> 不返回
-
-        put("跨词库调用", CallMethodCrossDictionary.class); //$跨词库调用 词库名 函数名 {传参}$
+        put("调用", CallMethod.class); //$调用 函数名 {传参(可选)}$ -> 不返回 or 集合
+        put("跨词库调用", CallMethodCrossDictionary.class); //$跨词库调用 词库名 函数名 {传参(可选)}$ -> 不返回 or 集合
+        put("异步调用", CallMethodAsync.class); //$异步调用 {调用结构}$ -> 不返回
+        put("延时", Delay.class); //$延时 毫秒$ -> 不返回
 
 
         put("读", Read.class); //$读 文件路径 参数名(可选) 默认值(可选)$
