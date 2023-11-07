@@ -32,13 +32,14 @@ public class CallMethodCrossDictionary extends Function {
                 .filter((v) -> v.getName().equals(args.get(0).toString()))
                 .findFirst().orElseThrow(() -> new DictionaryOnRunningException("找不到词库文件:" + args.get(0).toString()));
 
-        var runtime1 = new CallMethod.FunctionRuntime(f, runtime, args.size() > 2);
+        boolean isolate = args.size() > 2;
+        var runtime1 = new CallMethod.FunctionRuntime(f, runtime, isolate);
 
-        if (args.size() > 2) {
+        if (isolate) {
             runtime1.getRuntimeObject().putAll((Map<String, Object>) args.get(2));
         }
 
         runtime1.invoke(args.get(1).toString());
-        return null;
+        return isolate ? runtime1.getRuntimeObject() : null;
     }
 }

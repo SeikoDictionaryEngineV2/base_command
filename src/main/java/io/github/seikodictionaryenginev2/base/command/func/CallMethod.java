@@ -24,20 +24,21 @@ public class CallMethod extends Function {
     protected Object run(BasicRuntime<?, ?, ?> runtime, List<Object> args) {
         DictionaryFile file = runtime.getFile();
 
-        var runtime1 = new FunctionRuntime(file,runtime,args.size() > 1);
+        boolean isolate = args.size() > 1;
+        var runtime1 = new FunctionRuntime(file, runtime, isolate);
 
-        if (args.size() > 1) {
-            runtime1.getRuntimeObject().putAll((Map<String,Object>) args.get(1));
+        if (isolate) {
+            runtime1.getRuntimeObject().putAll((Map<String, Object>) args.get(1));
         }
 
         runtime1.invoke(args.get(0).toString());
-        return null;
+        return isolate ? runtime1.getRuntimeObject() : null;
     }
 
 
-    public static class FunctionRuntime<Event,Contact,MessageCache> extends BasicRuntime<BasicRuntime<Event,Contact,MessageCache>,Contact,MessageCache> {
+    public static class FunctionRuntime<Event, Contact, MessageCache> extends BasicRuntime<BasicRuntime<Event, Contact, MessageCache>, Contact, MessageCache> {
 
-        private final BasicRuntime<Event,Contact,MessageCache> origin;
+        private final BasicRuntime<Event, Contact, MessageCache> origin;
 
         private final boolean prevented;
 
@@ -62,8 +63,9 @@ public class CallMethod extends Function {
             try {
                 Method method = origin.getClass().getDeclaredMethod("clearMessage0", Object.class);
                 method.setAccessible(true);
-                method.invoke(origin,messageCache);
-            } catch (Exception ignored) {}
+                method.invoke(origin, messageCache);
+            } catch (Exception ignored) {
+            }
         }
 
         @Override
@@ -71,8 +73,9 @@ public class CallMethod extends Function {
             try {
                 Method method = origin.getClass().getDeclaredMethod("appendMessage", String.class);
                 method.setAccessible(true);
-                method.invoke(origin,str);
-            } catch (Exception ignored) {}
+                method.invoke(origin, str);
+            } catch (Exception ignored) {
+            }
         }
 
         @Override
@@ -107,7 +110,8 @@ public class CallMethod extends Function {
 
         @Override
         public void clearMessage() {
-            origin.clearMessage();
+            //函数内无需sendMessage
+//            origin.clearMessage();
         }
 
         @Override
