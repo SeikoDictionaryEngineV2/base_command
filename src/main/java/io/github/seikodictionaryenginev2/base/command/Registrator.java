@@ -1,7 +1,6 @@
 package io.github.seikodictionaryenginev2.base.command;
 
-import io.github.seikodictionaryenginev2.base.command.bean.Read;
-import io.github.seikodictionaryenginev2.base.command.bean.WriteKV;
+import io.github.seikodictionaryenginev2.base.command.bean.ReadObject;
 import io.github.seikodictionaryenginev2.base.command.bean.WriteObject;
 import io.github.seikodictionaryenginev2.base.command.collection.CheckExist;
 import io.github.seikodictionaryenginev2.base.command.collection.Clone;
@@ -12,6 +11,7 @@ import io.github.seikodictionaryenginev2.base.command.func.CallMethodAsync;
 import io.github.seikodictionaryenginev2.base.command.func.Delay;
 import io.github.seikodictionaryenginev2.base.command.global.SettingGet;
 import io.github.seikodictionaryenginev2.base.command.global.SettingKey;
+import io.github.seikodictionaryenginev2.base.command.spawn.RandomNumber;
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile;
 import io.github.seikodictionaryenginev2.base.entity.code.DictionaryCommandMatcher;
 import io.github.seikodictionaryenginev2.base.entity.code.func.Function;
@@ -30,15 +30,18 @@ public class Registrator {
         put("取设置", SettingGet.class); //$设置 键 默认值(可选)$ -> 字符串
         put("设置键", SettingKey.class); //$设置键$ -> 集合(列表)
 
+        //调用类
         put("调用", CallMethod.class); //$调用 函数名 {传参(可选)}$ -> 不返回 or 集合
         put("跨词库调用", CallMethodCrossDictionary.class); //$跨词库调用 词库名 函数名 {传参(可选)}$ -> 不返回 or 集合
         put("异步调用", CallMethodAsync.class); //$异步调用 {调用结构}$ -> 不返回
         put("延时", Delay.class); //$延时 毫秒$ -> 不返回
 
+        //读写类
+        put("读对象", ReadObject.class); //$读对象 文件路径 默认值 自动保存(可选)$
+        put("写对象", WriteObject.class); //$写对象 文件路径 {覆写对象}$
 
-        put("读", Read.class); //$读 文件路径 参数名(可选) 默认值(可选)$
-        put("写", WriteKV.class); //$写 文件路径 键 值(可选)$
-        put("写对象", WriteObject.class); //$写 文件路径 {覆写对象}$
+        //生成类
+        put("随机数", RandomNumber.class); //$随机数$ $随机数 {最大值}$ $随机数 {最小值} {最大值}$
     }};
 
     public static void inject() {

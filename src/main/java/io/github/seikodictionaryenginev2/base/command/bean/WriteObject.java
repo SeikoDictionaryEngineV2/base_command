@@ -1,20 +1,25 @@
 package io.github.seikodictionaryenginev2.base.command.bean;
 
+import com.alibaba.fastjson2.JSON;
 import io.github.seikodictionaryenginev2.base.entity.code.func.Function;
+import io.github.seikodictionaryenginev2.base.entity.code.func.type.ArgumentLimiter;
 import io.github.seikodictionaryenginev2.base.env.DictionaryEnvironment;
+import io.github.seikodictionaryenginev2.base.exception.DictionaryOnRunningException;
 import io.github.seikodictionaryenginev2.base.session.BasicRuntime;
+import io.github.seikodictionaryenginev2.base.util.IOUtil;
 import io.github.seikodictionaryenginev2.base.util.storage.JSONObjectStorage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 /**
- * @Description 向文件写入内容
+ * @Description 向文件写入JSON对象
  * @Author kagg886
  * @Date 2023/11/6
  */
-public class WriteObject extends Function {
+public class WriteObject extends Function implements ArgumentLimiter {
 
     public WriteObject(int line, String code) {
         super(line, code);
@@ -25,22 +30,24 @@ public class WriteObject extends Function {
         String path = runtime.getFile().getFather().getName();
 
         File target = DictionaryEnvironment.getInstance().getDicData().resolve(
-                path.substring(0,path.lastIndexOf("."))
+                path.substring(0, path.lastIndexOf("."))
         ).resolve(args.get(0).toString()).toFile();
-        
-        JSONObjectStorage storage = JSONObjectStorage.obtain(target.getAbsolutePath());
 
         if (args.size() == 1) {
-            JSONObjectStorage.destroy(target.getAbsolutePath());
             target.delete();
             return null;
         }
-        
-        storage.clear();
-        storage.putAll(((Map) args.get(1)));
-
-        storage.save();
+        try {
+            IOUtil.writeStringToFile(target.getAbsolutePath(), JSON.toJSONString(args.get(1)));
+        } catch (IOException e) {
+            throw new DictionaryOnRunningException("写对象失败");
+        }
 
         return null;
+    }
+
+    @Override
+    public int getArgumentLength() {
+        return 2;
     }
 }

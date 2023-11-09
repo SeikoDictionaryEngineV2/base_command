@@ -57,10 +57,15 @@ public class TestDictionaryCode {
         Thread.sleep(5000);
     }
 
+    @Test
+    public void spawnTest() throws InterruptedException {
+        invoke("生成测试");
+    }
+
 
     @Test
-    public void ioTest() {
-        invoke("读写测试");
+    public void reactiveTest() {
+        invoke("读写对象测试");
     }
 
     private static DictionaryEnvironment initEnv() {

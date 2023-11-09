@@ -1,5 +1,7 @@
 package io.github.seikodictionaryenginev2.base.command.collection;
 
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import io.github.seikodictionaryenginev2.base.entity.code.func.Function;
 import io.github.seikodictionaryenginev2.base.session.BasicRuntime;
 
@@ -25,11 +27,11 @@ public class Clone extends Function {
         Object obj = args.get(0);
 
         if (obj instanceof List<?>) {
-            return new ArrayList<>(((List<?>) obj));
+            return new JSONArray(((List<?>) obj));
         }
 
         if (obj instanceof Map<?,?>) {
-            return new HashMap<>(((Map<?, ?>) obj));
+            return new JSONObject(((Map<?, ?>) obj));
         }
         return "null";
     }
