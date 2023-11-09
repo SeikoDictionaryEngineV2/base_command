@@ -15,10 +15,7 @@ import io.github.seikodictionaryenginev2.base.command.global.SettingGet;
 import io.github.seikodictionaryenginev2.base.command.global.SettingKey;
 import io.github.seikodictionaryenginev2.base.command.spawn.RandomNumber;
 import io.github.seikodictionaryenginev2.base.command.spawn.RandomUUID;
-import io.github.seikodictionaryenginev2.base.command.string.LowerCase;
-import io.github.seikodictionaryenginev2.base.command.string.NewString;
-import io.github.seikodictionaryenginev2.base.command.string.Split;
-import io.github.seikodictionaryenginev2.base.command.string.UpperCase;
+import io.github.seikodictionaryenginev2.base.command.string.*;
 import io.github.seikodictionaryenginev2.base.command.web.HTTP;
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile;
 import io.github.seikodictionaryenginev2.base.entity.code.DictionaryCommandMatcher;
@@ -55,14 +52,16 @@ public class Registrator {
         put("UUID", RandomUUID.class); //$UUID$ -> 字符串
 
         //网络类
-        put("HTTP", HTTP.class); //$HTTP {选项}$
+        put("HTTP", HTTP.class); //$HTTP {选项}$ ->集合
 
         //字符串类
         put("字符串创建", NewString.class); //$字符串创建 集合(字节数组) 编码(可选)$ -> 字符串
         put("字符串分割", Split.class); //$字符串分割 字符串 正则表达式$ ->集合
         put("转大写", UpperCase.class); //$转大写 字符串$ ->字符串
         put("转小写", LowerCase.class); //$转小写 字符串$ ->字符串
-        put("关键词检测", LowerCase.class); //$关键词检测 字符串 子关键词$ ->true/false
+        put("关键词检测", Contain.class); //$关键词检测 字符串 子关键词$ ->true/false
+        put("替换", Replace.class); //$替换 待替换字符串 原字符串 替换字符串$ ->字符串
+        put("正则",Regex.class); //$正则 字符串 表达式$->匹配到的字符串的集合
     }};
 
     public static void inject() {
