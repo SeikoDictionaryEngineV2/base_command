@@ -6,6 +6,7 @@ group = 'io.github.seikodictionaryenginev2'
 version = '1.0-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     maven {
         url 'https://s01.oss.sonatype.org/content/repositories/releases'
     }
@@ -17,6 +18,7 @@ dependencies {
 
     compileOnly 'com.alibaba.fastjson2:fastjson2:2.0.42'
     implementation 'org.jsoup:jsoup:1.15.3'
+
 
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'

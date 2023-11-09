@@ -57,6 +57,9 @@ public class CallMethodAsync extends Function {
                 runtime2.getRuntimeObject().putAll(runtime1.getRuntimeObject());
                 runtime2.invoke(op.call);
             }
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            return null;
         });
         return null;
     }

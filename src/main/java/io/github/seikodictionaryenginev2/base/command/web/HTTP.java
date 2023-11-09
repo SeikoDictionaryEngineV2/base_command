@@ -2,6 +2,9 @@ package io.github.seikodictionaryenginev2.base.command.web;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONReader;
+import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.annotation.JSONField;
 import io.github.seikodictionaryenginev2.base.entity.code.func.Function;
 import io.github.seikodictionaryenginev2.base.entity.code.func.type.SendMessageWhenPostExecute;
 import io.github.seikodictionaryenginev2.base.exception.DictionaryOnRunningException;
@@ -21,7 +24,6 @@ import java.util.Map;
  * @Date 2023/11/8
  */
 public class HTTP extends Function implements SendMessageWhenPostExecute {
-    //TODO 待测试
     public HTTP(int line, String code) {
         super(line, code);
     }
@@ -34,7 +36,7 @@ public class HTTP extends Function implements SendMessageWhenPostExecute {
 
     @Override
     protected Object run(BasicRuntime<?, ?, ?> runtime, List<Object> args) {
-        Options options = JSON.parseObject(args.get(0).toString(), Options.class);
+        Options options = JSON.parseObject(args.get(0).toString(), Options.class, JSONReader.Feature.FieldBased);
         if (options.url == null) {
             throw new DictionaryOnRunningException("url是必选项!");
         }
@@ -69,7 +71,7 @@ public class HTTP extends Function implements SendMessageWhenPostExecute {
         response.headers = new JSONObject(resp.headers());
         response.cookie = new JSONObject(resp.cookies());
 
-        return JSON.parseObject(JSON.toJSONString(response));
+        return JSON.parseObject(JSON.toJSONString(response, JSONWriter.Feature.FieldBased));
     }
 
     private static class Response {
@@ -87,54 +89,6 @@ public class HTTP extends Function implements SendMessageWhenPostExecute {
         private JSONObject header = new JSONObject(); //请求头
         private JSONObject cookie = new JSONObject(); //cookie
         private Object bodyOrData = new JSONObject(); //body的类型为String或JSONObject
-        private Integer timeout = 1000; //超时时间
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public Connection.Method getMethod() {
-            return method;
-        }
-
-        public void setMethod(Connection.Method method) {
-            this.method = method;
-        }
-
-        public JSONObject getHeader() {
-            return header;
-        }
-
-        public void setHeader(JSONObject header) {
-            this.header = header;
-        }
-
-        public JSONObject getCookie() {
-            return cookie;
-        }
-
-        public void setCookie(JSONObject cookie) {
-            this.cookie = cookie;
-        }
-
-        public Object getBodyOrData() {
-            return bodyOrData;
-        }
-
-        public void setBodyOrData(Object bodyOrData) {
-            this.bodyOrData = bodyOrData;
-        }
-
-        public Integer getTimeout() {
-            return timeout;
-        }
-
-        public void setTimeout(Integer timeout) {
-            this.timeout = timeout;
-        }
+        private Integer timeout = 10000; //超时时间
     }
 }

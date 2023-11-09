@@ -1,16 +1,24 @@
 package io.githubseikodictionaryenginev2.test;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import io.github.seikodictionaryenginev2.base.command.Registrator;
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile;
 import io.github.seikodictionaryenginev2.base.entity.DictionaryProject;
 import io.github.seikodictionaryenginev2.base.entity.code.DictionaryCommandMatcher;
 import io.github.seikodictionaryenginev2.base.env.DictionaryEnvironment;
 import io.github.seikodictionaryenginev2.base.session.BasicRuntime;
+import io.github.seikodictionaryenginev2.base.util.IOUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
 /**
  * @Description
@@ -50,6 +58,31 @@ public class TestDictionaryCode {
         invoke("跨词库调用测试");
     }
 
+
+    @Test
+    public void httpTest() throws IOException, InterruptedException {
+        HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
+        server.createContext("/test", httpExchange -> {
+            StringBuilder builder = new StringBuilder("服务端接收到新请求:\n");
+            builder.append("\nmethod:").append(httpExchange.getRequestMethod());
+            builder.append("\nHeader:\n   ").append(httpExchange.getRequestHeaders().entrySet().stream().map((entry)->entry.getKey() + ":" + entry.getValue() + "\n   ").collect(Collectors.joining()));
+            builder.append("\nbody:").append(IOUtil.loadStringFromStream(httpExchange.getRequestBody()));
+            System.out.println(builder);
+
+            String response = "hello world";
+            httpExchange.sendResponseHeaders(200, 0);
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        });
+        server.start();
+        invoke("http测试");
+    }
+
+    @Test
+    public void strTest() throws InterruptedException {
+        invoke("字符串测试");
+    }
 
     @Test
     public void asyncTest() throws InterruptedException {
