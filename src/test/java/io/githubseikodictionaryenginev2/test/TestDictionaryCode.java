@@ -63,10 +63,10 @@ public class TestDictionaryCode {
     public void httpTest() throws IOException, InterruptedException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
         server.createContext("/test", httpExchange -> {
-            StringBuilder builder = new StringBuilder("服务端接收到新请求:\n");
-            builder.append("\nmethod:").append(httpExchange.getRequestMethod());
-            builder.append("\nHeader:\n   ").append(httpExchange.getRequestHeaders().entrySet().stream().map((entry)->entry.getKey() + ":" + entry.getValue() + "\n   ").collect(Collectors.joining()));
-            builder.append("\nbody:").append(IOUtil.loadStringFromStream(httpExchange.getRequestBody()));
+            String builder = "服务端接收到新请求:" +
+                    "\nmethod:" + httpExchange.getRequestMethod() +
+                    "\nHeader:\n   " + httpExchange.getRequestHeaders().entrySet().stream().map((entry) -> entry.getKey() + ":" + entry.getValue() + "\n   ").collect(Collectors.joining()) +
+                    "\nbody:" + IOUtil.loadStringFromStream(httpExchange.getRequestBody());
             System.out.println(builder);
 
             String response = "hello world";
@@ -80,7 +80,7 @@ public class TestDictionaryCode {
     }
 
     @Test
-    public void strTest() throws InterruptedException {
+    public void strTest() {
         invoke("字符串测试");
     }
 
