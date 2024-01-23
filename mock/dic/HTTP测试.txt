@@ -14,14 +14,14 @@ options<-///
     "bodyOrData": "123"
 }
 ///
-A<-$HTTP {options}$
-{A}\n
+A<-$HTTP ${options}$
+${A}\n
 $延时 1000$
-{options.bodyOrData}<-///
+${options.bodyOrData}<-///
 {
     "A":"1",
     "B":"2"
 }
 ///
-A<-$HTTP {options}$
-{A}
+A<-$HTTP ${options}$
+${A}
