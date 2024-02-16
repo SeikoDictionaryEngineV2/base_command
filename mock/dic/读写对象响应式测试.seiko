@@ -1,0 +1,14 @@
+#Seiko词库V2
+
+[控制台]读写对象测试
+$写对象 data/A.txt$
+A<-$读对象 data/A.txt {}$
+${A.add1}<-1919
+$写对象 data/A.txt ${A}$
+A<-$读对象 data/A.txt {} true$
+//ran不能含有小数点
+${A.add2}<-1919
+响应式写已完成\n
+A<-$读字节 data/A.txt$
+${A}
+$写字节 C.txt ${A}$
