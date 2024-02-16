@@ -1,7 +1,5 @@
 package io.githubseikodictionaryenginev2.test;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import io.github.seikodictionaryenginev2.base.command.Registrator;
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile;

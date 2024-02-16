@@ -9,14 +9,14 @@ archivesBaseName = rootProject.name
 version = VERSION_NAME
 
 repositories {
-    mavenLocal()
-//    maven {
-//        url 'https://s01.oss.sonatype.org/content/repositories/releases'
-//    }
+//    mavenLocal()
+    maven {
+        url 'https://s01.oss.sonatype.org/content/repositories/releases'
+    }
     mavenCentral()
 }
 dependencies {
-    implementation('io.github.seikodictionaryenginev2:core_base:2.0-dev-5')
+    implementation('io.github.seikodictionaryenginev2:core_base:2.0-dev-6')
 
     compileOnly 'com.alibaba.fastjson2:fastjson2:2.0.42'
     implementation 'org.jsoup:jsoup:1.15.3'
