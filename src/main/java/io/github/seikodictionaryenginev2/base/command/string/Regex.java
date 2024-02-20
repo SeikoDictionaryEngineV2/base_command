@@ -1,7 +1,9 @@
 package io.github.seikodictionaryenginev2.base.command.string;
 
 import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import io.github.seikodictionaryenginev2.base.entity.code.func.Function;
+import io.github.seikodictionaryenginev2.base.entity.code.func.type.ArgumentLimiter;
 import io.github.seikodictionaryenginev2.base.session.BasicRuntime;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.regex.Pattern;
  * @Author kagg886
  * @Date 2023/11/9
  */
-public class Regex extends Function {
+public class Regex extends Function implements ArgumentLimiter {
     public Regex(int line, String code) {
         super(line, code);
     }
@@ -27,6 +29,23 @@ public class Regex extends Function {
         while (m.find()) {
             array.add(m.group());
         }
-        return array;
+
+        m.reset();
+
+        JSONArray array1 = new JSONArray();
+        while (m.find()) {
+            for (int i = 1; i <= m.groupCount(); i++) {
+                array1.add(m.group(i));
+            }
+        }
+        return new JSONObject() {{
+           put("result",array);
+           put("group",array1);
+        }};
+    }
+
+    @Override
+    public int getArgumentLength() {
+        return 2;
     }
 }

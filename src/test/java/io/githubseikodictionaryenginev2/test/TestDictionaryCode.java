@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -80,6 +82,21 @@ public class TestDictionaryCode {
     @Test
     public void strTest() {
         invoke("字符串测试");
+    }
+
+    @Test
+    public void regexTest() {
+        Matcher m = Pattern.compile("点歌 (.*)").matcher("点歌 111");
+        int groups = 0;
+        while (m.find()) {
+            int i;
+            if (groups == 0) {
+                for (i = 1; i <= m.groupCount(); i++) {
+                    System.out.println(m.group(i));
+                }
+            }
+            groups++;
+        }
     }
 
     @Test
