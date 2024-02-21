@@ -7,6 +7,7 @@ import io.github.seikodictionaryenginev2.base.command.bean.WriteObject;
 import io.github.seikodictionaryenginev2.base.command.collection.CheckExist;
 import io.github.seikodictionaryenginev2.base.command.collection.Clone;
 import io.github.seikodictionaryenginev2.base.command.collection.Length;
+import io.github.seikodictionaryenginev2.base.command.collection.ToCollection;
 import io.github.seikodictionaryenginev2.base.command.func.CallMethod;
 import io.github.seikodictionaryenginev2.base.command.func.CallMethodAsync;
 import io.github.seikodictionaryenginev2.base.command.func.CallMethodCrossDictionary;
@@ -30,6 +31,7 @@ public class Registrator {
         put("集合克隆", Clone.class); //$集合克隆 {对象}$ -> 集合 or null
         put("集合长", Length.class); //$集合长 {对象}$ -> 集合 or null
         put("集合检验", CheckExist.class); //$集合检验 {集合对象} {检验对象}$ -> 布尔值
+        put("转集合", ToCollection.class); //$集合检验 {集合对象} {检验对象}$ -> 布尔值
 
         //变量类
         put("取设置", SettingGet.class); //$设置 键 默认值(可选)$ -> 字符串
